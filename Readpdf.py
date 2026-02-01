@@ -46,6 +46,18 @@ for i, line in enumerate(lines):       # skip preliminary lines at start
                 line = lines[i]
                 summary = line
                 print(summary)
+            i += 1
+            line = lines[i]
+            if 'Rooms' in line:             # Unit not listed
+                pass
+            else:                           # Event must start with Availabilities
+                availabilities = line
+                while not ('Rooms' in line):
+                    i += 1 
+                    line = lines[i]
+                    availabilitiies = availabilities + line
+                    print(availabilities)
+                room = "B10." + line[11:13].strip()
         except:
             print("something screwed up")
 
