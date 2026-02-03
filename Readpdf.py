@@ -37,17 +37,48 @@ for i, line in enumerate(lines):       # skip preliminary lines at start
         i += 1
         try:
             line = lines[i]     # checking for case where day of week was on last line and therefore can't increment.  This may need to change as develop code
-            if "Wks" in line:           # Multiple week event
+            if "Wk" in line:           # Single week event
                 pass
-            else:                       # Must be single week event
+            else:                       # Must be multiple week event (wks)
+                pass
+                '''
                 date = line[-10:]
                 print(date)
                 i += 1
                 line = lines[i]
                 summary = line
                 print(summary)
+                '''
             i += 1
             line = lines[i]
+            gathering_info = True
+            while gathering_info:
+                match (line.split(":")[0]):
+                    case "Availabilities":
+                        print("Availabilities") # To do
+                    case "Rooms":
+                        room = line[:6].strip()
+                        print(room)
+                    case "Classes":
+                        group = line[0]
+                        print(group)
+                    case "Staff":
+                        teacher = line
+                        print(teacher)
+                    case "Activities":
+                        pattern = r'VU\d{5}'|'BSB\c{3}\d{3}'|'ICT\c{3}\d{3}'
+                        regex = re.compile(pattern)   # look for unit
+                        activity = regex.match(line)
+                        print(activity)     
+                    case "Courses":
+                        course = line[:4]
+                        print(course)
+                    case "Notes":               # event information extraction complete
+                        gathering_info = False
+                i += 1
+                line = lines[i]
+                
+
             if 'Rooms' in line:             # Unit not listed
                 pass
             else:                           # Event must start with Availabilities
