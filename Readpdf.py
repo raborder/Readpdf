@@ -1,9 +1,49 @@
+"""
+Program description
+"""
+
+"""
+Imports
+"""
+
 from ast import Try
 from pypdf import PdfReader
 import re
+from datetime import date, timedelta, datetime
+
+"""
+Create functions
+"""
+
+''' replaced by week_to_isodate
+def week_to_date(current_year, week_num):
+    # Combine year and week number into a string, specifying Monday (1) as the start day
+    date_string = f'{current_year}-{week_num}-1'
+    # Use strptime to parse the string into a datetime object
+    date_object = datetime.strptime(date_string,"%Y-%W-%w")
+    return date_object.date()
+'''
+
+def week_to_isodate(current_year, week_num, day_of_week):
+    date_object = date.fromisocalendar(current_year, week_num, day_of_week)
+    return date_object
+
+"""
+Main program
+"""
+
+'''
+Initialise variables
+'''
+
+current_year = date.today().year
+
+'''
+Start here
+'''
 
 # Create a PdfReader object by providing the path to your PDF file
-reader = PdfReader('CELCAT_Timetable_IC32G.pdf')
+reader = PdfReader('CELCAT_Timetable_CT423.pdf')
 
 # Get the total number of pages
 num_pages = len(reader.pages)
@@ -25,31 +65,76 @@ pattern = r'^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b'
 lines = all_text.splitlines()
 
 for i, line in enumerate(lines):       # skip preliminary lines at start
-    regex = re.compile(pattern)   # look for day of week
+    regex = re.compile(pattern)         # look for day of week
     match = regex.match(line)
     if match != None:
-        day = match
+        day = match.group()             # To extract the matched string, you use the .group() method
         print(match)
+        match day:
+            case 'Mon':
+                day_of_week = 1
+            case 'Tue':
+                day_of_week = 2
+            case 'Wed':
+                day_of_week = 3
+            case 'Thu':
+                day_of_week = 4
+            case 'Fri':
+                day_of_week = 5
+            case 'Sat':
+                day_of_week = 6
+            case _:
+                day_of_week = 7
         start_time = line[5:12]
         print(start_time)
         stop_time = line[13:]
         print(stop_time.strip())
-        i += 1
         try:
+            #######################################
+            # Scheduling information
+            #######################################
+            i += 1
             line = lines[i]     # checking for case where day of week was on last line and therefore can't increment.  This may need to change as develop code
-            if "Wk" in line:           # Single week event
-                pass
-            else:                       # Must be multiple week event (wks)
-                pass
-                '''
-                date = line[-10:]
-                print(date)
+            if not "Wks" in line:           # Single week event
+                week_num = int(line[3:4].strip())
+                event_date = week_to_isodate(current_year, week_num, day_of_week)
+                print(event_date.strftime("%d/%m/%Y"))
                 i += 1
                 line = lines[i]
-                summary = line
-                print(summary)
-                '''
-            i += 1
+                event_type = line       # next line must be event type (Orientation or Teaching)
+                recurring_event = False
+            else:                       # Must be multiple week event (wks)
+                # get all lines up to event type so they can be analysed
+                while not (("Teaching" in line) or ("Orientation" in line)):
+                    i += 1
+                    line = line + lines[i] 
+                pattern = r'\d{1,2}-\d{1,2}'
+                matches = re.findall(pattern, line) # Output: ['1-2', '12-3', '1-34', '12-34']
+                for index, week_range in enumerate(matches):
+                    print(f"Index: {index}, Value: {week_range}")
+                    index = week_range.find('-')
+                    start_week = week_range[:index]
+                    stop_week = week_range[index+1:]
+                    print("Start_week: ",start_week)
+                    print("Stop_week: ",stop_week)
+                    event_date = week_to_isodate(current_year, int(start_week), day_of_week)
+                    num_of_weeks = int(stop_week) - int(start_week) + 1
+                    print("Recurrences: ",num_of_weeks)
+                    ################## store this information #############################
+                print(matches)
+                if "Teaching" in line:
+                    event_type = "Teaching"
+                elif "Orientation" in line:
+                    event_type = "Orientation"
+                else:
+                    print("Something screwed up")
+                recurring_event = True
+            print(event_type)
+
+            #######################################
+            # Event information
+            #######################################
+            i += 1                      # Advance to next line for processing
             line = lines[i]
             gathering_info = True
             while gathering_info:
@@ -67,12 +152,12 @@ for i, line in enumerate(lines):       # skip preliminary lines at start
                                 break
                             else:
                                 parameter = parameter + line
-                        unit_pattern = r'VU\d{5}'|'BSB\c{3}\d{3}'|'ICT\c{3}\d{3}'   # search for unit using regex
+                        unit_pattern = r'VU\d{5}'|r'BSB\c{3}\d{3}'|r'ICT\c{3}\d{3}'   # search for unit using regex
                         regex = re.compile(unit_pattern)   # look for unit
-                        availabilities = regex.match(line)
+                        availabilities = regex.search(line)
                         print(availabilities)
                     case "Rooms":                   # Check if multiple lines
-                        room = line[:6].strip()
+                        room = line[7:14].strip()
                         print(room)
                     case "Classes":                 # Should be OK, 1 line only
                         group = line[0]
@@ -80,10 +165,15 @@ for i, line in enumerate(lines):       # skip preliminary lines at start
                     case "Staff":
                         teacher = line
                         print(teacher)              # Should be OK, 1 line only
-                    case "Activities":
-                        unit_pattern = r'VU\d{5}'|'BSB\c{3}\d{3}'|'ICT\c{3}\d{3}'
+                    case "Activities":              ################# Update to get all activities ##################
+                        while not (("Teaching" in line) or ("Orientation" in line)):  ######### What to look for? ##############
+                            i += 1
+                            line = line + lines[i] 
+                        pattern = r'\d{1,2}-\d{1,2}'
+                        matches = re.find(pattern, line)
+                        unit_pattern = r'VU\d{5}|BSB\[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'
                         regex = re.compile(unit_pattern)   # look for unit
-                        activity = regex.match(line)
+                        activity = regex.search(line)
                         print(activity)     
                     case "Courses":
                         course = line[:4]
@@ -91,9 +181,9 @@ for i, line in enumerate(lines):       # skip preliminary lines at start
                     case "Notes":               # event information extraction complete
                         gathering_info = False
                     case _:
-                        i += 1
-                        line = lines[i]
-               
+                        pass
+                i += 1                      # Advance to next line for processing
+                line = lines[i]
 
             '''
             if 'Rooms' in line:             # Unit not listed
@@ -107,8 +197,8 @@ for i, line in enumerate(lines):       # skip preliminary lines at start
                     print(availabilities)
                 room = "B10." + line[11:13].strip()
             '''
-        except:
-            print("something screwed up")
+        except Exception as e:
+            print(f"something screwed up: {e}")
         
 
 

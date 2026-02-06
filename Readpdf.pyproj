@@ -45,6 +45,8 @@
     </Interpreter>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CELCAT Timetable_CS423.pdf" />
+    <Content Include="CELCAT Timetable_CT423.pdf" />
     <Content Include="CELCAT_Timetable_IC32G.pdf" />
   </ItemGroup>
   <ItemGroup>
