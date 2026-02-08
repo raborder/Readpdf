@@ -145,45 +145,71 @@ for i, line in enumerate(lines):       # skip preliminary lines at start
                         while parameter_found == False:
                             i += 1
                             line = lines[i]
-                            parameter_pattern = r'^(Rooms:|Staff:|Activities:|Courses:|Notes:)\b'
-                            regex = re.compile(pattern, re.MULTILINE)   # look for day of week
+                            parameter_pattern = r'Rooms:|Classes:|Staff:|Activities:|Courses:|Notes:'
+                            regex = re.compile(pattern)   # look for day of week
                             match = regex.match(parameter)
                             if match != None:       # must have moved to next parameter
-                                break
+                                parameter_found = True
                             else:
                                 parameter = parameter + line
-                        unit_pattern = r'VU\d{5}'|r'BSB\c{3}\d{3}'|r'ICT\c{3}\d{3}'   # search for unit using regex
+                        unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'   # search for unit using regex
                         regex = re.compile(unit_pattern)   # look for unit
                         availabilities = regex.search(line)
                         print(availabilities)
-                    case "Rooms":                   # Check if multiple lines
+                    case "Rooms":
                         room = line[7:14].strip()
                         print(room)
+                        parameter_found = False     # Loop around until next parameter, building up Rooms string.
+                        parameter = line
+                        while parameter_found == False:                   # Check if multiple lines
+                            i += 1
+                            line = lines[i]
+                            parameter_pattern = r'Availabilities:|Classes:|Staff:|Activities:|Courses:|Notes:'
+                            regex = re.compile(parameter_pattern)
+                            match = regex.match(line)
+                            if match != None:       # must have moved to next parameter
+                                parameter_found = True
+                            else:
+                                parameter = parameter + line
                     case "Classes":                 # Should be OK, 1 line only
                         group = line[0]
                         print(group)
+                        i += 1
+                        line = lines[i]
                     case "Staff":
                         teacher = line
                         print(teacher)              # Should be OK, 1 line only
+                        i += 1
+                        line = lines[i]
                     case "Activities":              ################# Update to get all activities ##################
-                        while not (("Teaching" in line) or ("Orientation" in line)):  ######### What to look for? ##############
+                        parameter_found = False     # Loop around until next parameter, building up Activity string.
+                        parameter = line
+                        while parameter_found == False:                   # Check if multiple lines
                             i += 1
-                            line = line + lines[i] 
-                        pattern = r'\d{1,2}-\d{1,2}'
-                        matches = re.find(pattern, line)
-                        unit_pattern = r'VU\d{5}|BSB\[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'
+                            line = lines[i]
+                            parameter_pattern = r'Availabilities:|Rooms:|Classes:|Staff:|Courses:|Notes:'
+                            regex = re.compile(parameter_pattern)   # look for day of week
+                            match = regex.match(line)
+                            if match != None:       # must have moved to next parameter
+                                parameter_found = True
+                            else:
+                                parameter = parameter + line
+                        unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'   # search for unit using regex
                         regex = re.compile(unit_pattern)   # look for unit
-                        activity = regex.search(line)
-                        print(activity)     
+                        availabilities = regex.search(parameter)
+                        print(availabilities)
                     case "Courses":
-                        course = line[:4]
+                        course = line[9:14]
                         print(course)
-                    case "Notes":               # event information extraction complete
+                        i += 1
+                        line = lines[i]
+                    case "Notes":               # event information extraction complete when get to Notes. Notes information not extracted.
                         gathering_info = False
+                        i += 1
+                        line = lines[i]
                     case _:
-                        pass
-                i += 1                      # Advance to next line for processing
-                line = lines[i]
+                        i += 1                      # Advance to next line for processing
+                        line = lines[i]
 
             '''
             if 'Rooms' in line:             # Unit not listed
