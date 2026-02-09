@@ -10,10 +10,26 @@ from ast import Try
 from pypdf import PdfReader
 import re
 from datetime import date, timedelta, datetime
+import os.path
+import json
 
 """
-Create functions
+Class colours
+
+IC32V   Yr1 Group 1 2 (Sage)
+        Yr1 Group 2 10 (Basil)
+	    Yr2 Group 1	7 Lavender
+	    Yr2 Group 2	9 Blueberry
+IC32G	Group 1     
+	    Group 2	
+	    Group 3	
+CT423	Group 1	
+
 """
+
+########################
+# Function definitions
+########################
 
 ''' replaced by week_to_isodate
 def week_to_date(current_year, week_num):
@@ -58,12 +74,41 @@ day_of_week = {'Mon':1,
                'Sat':6,
                'Sun':7}
 
+# Create list of event objects
+event_list = [] # List of event objects
+event_count = 0
+events = {}
+
+# Create dictionary
+event_id = "event" + str(event_count)
+event_data = {(event_id):{"summary":"","location": "B10", "class_time":"", "description": "", "colorId": 0, "start": "", "recurrence": 0}}
+
 '''
 Start here
 '''
 
-# Create a PdfReader object by providing the path to your PDF file
-reader = PdfReader('CELCAT_Timetable_CT423.pdf')
+#############################################
+#  Read pdf
+#############################################
+
+selection = input("Which cohort would you like to view?\nEnter 1 for IC32V\n2 for IC32G\n3 for CS423\n4 for CT423\nOr just enter for default file\n: ")
+
+match (selection):
+    case "1":
+        # Create a PdfReader object by providing the path to your PDF file
+        reader = PdfReader('CELCAT_Timetable_IC32V.pdf')
+    case "2":
+        # Create a PdfReader object by providing the path to your PDF file
+        reader = PdfReader('CELCAT_Timetable_IC32G.pdf')
+    case "3":
+        # Create a PdfReader object by providing the path to your PDF file
+        reader = PdfReader('CELCAT_Timetable_CS423.pdf')
+    case "4":
+        # Create a PdfReader object by providing the path to your PDF file
+        reader = PdfReader('CELCAT_Timetable_CT423.pdf')
+    case _:
+        # Create a PdfReader object by providing the path to your PDF file
+        reader = PdfReader('CELCAT_Timetable.pdf')
 
 # Get the total number of pages
 num_pages = len(reader.pages)
@@ -81,6 +126,10 @@ for page in reader.pages:
 print(all_text)
 
 lines = all_text.splitlines()
+
+#############################################
+#  Extract event information
+#############################################
 
 event_pattern = r'Mon|Tue|Wed|Thu|Fri|Sat|Sun|Availabilities:|Rooms:|Classes:|Staff:|Activities:|Courses:|Notes:'
 
@@ -148,18 +197,19 @@ while i < (len(lines) - 1):        # Loop through all lines
                 parameter = line
                 while parameter_found == False:
                     i += 1
-                    line = lines[i]
+                    parameter = parameter + lines[i]
                     parameter_pattern = r'Rooms:|Classes:|Staff:|Activities:|Courses:|Notes:'
-                    regex = re.compile(parameter_pattern)   # look for day of week
-                    match = regex.match(line)
+                    regex = re.compile(parameter_pattern)
+                    match = regex.search(parameter)
                     if match != None:       # must have moved to next parameter
                         parameter_found = True
-                    else:
-                        parameter = parameter + line
                 unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'   # search for unit using regex
                 regex = re.compile(unit_pattern)   # look for unit
-                availabilities = regex.search(line)
-                print("Availabilities: ",availabilities)
+                availabilities = regex.search(parameter)
+                if availabilities == None:
+                    print("Availabilities: ", "None")
+                else:
+                    print("Availabilities: ", availabilities.group())
                 i -= 1          # Decrement as had to go extra line to find end of Availabilities
             case "Rooms:":
                 room = line[7:14].strip()
@@ -183,23 +233,24 @@ while i < (len(lines) - 1):        # Loop through all lines
             case "Staff:":
                 teacher = line
                 print("Staff: ",teacher)              # Should be OK, 1 line only
-            case "Activities:":              ################# Update to get all activities ##################
+            case "Activities:":
                 parameter_found = False     # Loop around until next parameter, building up Activity string.
                 parameter = line
                 while parameter_found == False:                   # Check if multiple lines
                     i += 1
-                    line = lines[i]
+                    parameter = parameter + lines[i]
                     parameter_pattern = r'Availabilities:|Rooms:|Classes:|Staff:|Courses:|Notes:'
                     regex = re.compile(parameter_pattern)   # look for day of week
-                    match = regex.match(line)
+                    match = regex.search(parameter)
                     if match != None:       # must have moved to next parameter
                         parameter_found = True
-                    else:
-                        parameter = parameter + line
                 unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'   # search for unit using regex
                 regex = re.compile(unit_pattern)   # look for unit
                 activities = regex.search(parameter)
-                print("Actvities: ", activities)
+                if activities == None:
+                    print("Activities: ", "None")
+                else:
+                    print("Activities: ", activities.group())
                 i -= 1          # Decrement as had to go extra line to find end of Activities
             case "Courses:":
                 course = line[9:14]
@@ -208,6 +259,35 @@ while i < (len(lines) - 1):        # Loop through all lines
                 pass
             case _:
                 print("Something screwed up in the match statement")
+
+#############################################
+#  To do: Code to make json for each schedule
+#############################################
+
+
+print(event_data)
+events.update(event_data)   # append to events 
+print(events)
+
+
+#############################################
+#  Write json to file
+#############################################
+
+# Get the home directory path and join with the file name
+file_name = 'output.json'
+home_dir = os.path.expanduser("~")
+home_dir = os.path.join(home_dir, "Documents")
+complete_path = os.path.join(home_dir, file_name)
+print("complete path: " + complete_path)
+
+complete_path = os.path.join(home_dir, file_name)
+
+with open(complete_path, 'w') as file:
+# Dump the Python data to the file in JSON format
+    json.dump(events, file, indent=4) # Using indent makes the file human-readable
+
+
 
     '''
     if 'Rooms' in line:             # Unit not listed
