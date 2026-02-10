@@ -14,6 +14,7 @@ import re
 from datetime import date, timedelta, datetime
 import os.path
 import json
+import copy
 
 """
 Class colours
@@ -191,6 +192,7 @@ while i < (len(lines) - 1):        # Loop through all lines
                         line = line + lines[i] 
                     week_pattern = r'\d{1,2}-\d{1,2}'
                     matches = re.findall(week_pattern, line) # Output: ['1-2', '12-3', '1-34', '12-34']
+                    week_list = []
                     for index, week_range in enumerate(matches):
                         print(f"Index: {index}, Value: {week_range}")
                         index = week_range.find('-')
@@ -201,7 +203,9 @@ while i < (len(lines) - 1):        # Loop through all lines
                         event_date = week_to_isodate(current_year, int(start_week), day_of_week[matched_line.group()])
                         num_of_weeks = int(stop_week) - int(start_week) + 1
                         print("Recurrences: ",num_of_weeks)
-                        ################## store this information #############################
+                        # week_list.append((start_week,num_of_weeks))     # Store info
+                        week_list.append((event_date,num_of_weeks))     # Store info
+                        print("week_list: ", week_list)
                     print(matches)
                     if "Teaching" in line:
                         event_type = "Teaching"
@@ -340,6 +344,32 @@ while i < (len(lines) - 1):        # Loop through all lines
         ################
         # Do dates
         ################
+        if recurring_event == False:
+            event_data[(event_id)]["start"] = event_date
+            event_data[(event_id)]["recurrence"] = 0
+            print(event_data)
+            events.update(event_data)   # append to events 
+            print(events)
+        else:
+            pass
+            for week_info in week_list:
+                event_data[(event_id)]["start"] = week_info[0].strftime("%m/%d/%Y")
+                event_data[(event_id)]["recurrence"] = week_info[1]
+                print(event_data)
+                events.update(event_data)   # append to events 
+                print(events)
+
+                new_data = copy.deepcopy(events[event_count])
+
+                event_count += 1            # For last iteration we don't want to increment the even_count, so have a decrement after the for statment.
+                event_id = "event" + str(event_count)
+
+                events[] = new_data
+
+                print(event_data)
+                events.update(event_data)   # append to events 
+                print(events)
+            event_count -= 1
 
         print(event_data)
         events.update(event_data)   # append to events 
