@@ -7,6 +7,8 @@ Imports
 """
 
 from ast import Try
+from logging import fatal
+from os import times
 from pypdf import PdfReader
 import re
 from datetime import date, timedelta, datetime
@@ -57,6 +59,26 @@ def find_between(s, first_char, last_char):
         print("Couldn't find class")
         return ""
 
+def convert_to_24hr(time_12hr_string):
+  """
+  Converts a time string in 12-hour format to 24-hour format.
+
+  Args:
+    time_12hr_string: A string representing time in "HH:MM AM/PM" format.
+
+  Returns:
+    A string representing the time in "HH:MM" 24-hour format.
+  """
+  # Parse the 12-hour time string into a datetime object
+  # %I for 12-hour hour, %M for minute, %p for AM/PM indicator
+  in_time = datetime.strptime(time_12hr_string, "%I:%M%p")
+  
+  # Format the datetime object into a 24-hour time string
+  # %H for 24-hour hour
+  out_time = datetime.strftime(in_time, "%H:%M")
+  
+  return out_time
+
 """
 Main program
 """
@@ -76,12 +98,12 @@ day_of_week = {'Mon':1,
 
 # Create list of event objects
 event_list = [] # List of event objects
-event_count = 0
+event_count = -1
 events = {}
 
-# Create dictionary
-event_id = "event" + str(event_count)
-event_data = {(event_id):{"summary":"","location": "B10", "class_time":"", "description": "", "colorId": 0, "start": "", "recurrence": 0}}
+group = ""  #   Needed when Classes not in event
+
+all_event_info_collected = False
 
 '''
 Start here
@@ -255,6 +277,7 @@ while i < (len(lines) - 1):        # Loop through all lines
             case "Courses:":
                 course = line[9:14]
                 print("Course: ",course)
+                all_event_info_collected = True
             case "Notes:":               # event information extraction complete when get to Notes. Notes information not extracted.
                 pass
             case _:
@@ -264,11 +287,65 @@ while i < (len(lines) - 1):        # Loop through all lines
 #  To do: Code to make json for each schedule
 #############################################
 
+    if all_event_info_collected == True:
+        event_count += 1
+        event_id = "event" + str(event_count)
+        event_data = {(event_id):{"summary":"","location": "B10", "class_time":"", "description": "", "color_id": 0, "start": "", "recurrence": 0}}  # Create dictionary
+        event_data[(event_id)]["summary"] = course + group
+        event_data[(event_id)]["location"] = room
+        event_data[(event_id)]["class_time"] = convert_to_24hr(start_time) + " to " + convert_to_24hr(stop_time)
+        event_data[(event_id)]["description"] = "" ################ To be completed - add staff?
+        """
+        Class colours
 
-print(event_data)
-events.update(event_data)   # append to events 
-print(events)
+        IC32V   Yr1 Group 1 2 (Sage)
+                Yr1 Group 2 10 (Basil)
+	            Yr2 Group 1	7 Lavender
+	            Yr2 Group 2	9 Blueberry
+        IC32G	Group 1     5 Banana
+	            Group 2 & 3	4 Flamingo
+	            Group 4     6 Tangerine
+        CT423	New         1 Peacock
+                Continuing  3 Grape
 
+        """
+        color = 0   # Default
+        match course:
+            case "IC32V":
+                match group:
+                    case "Group 1": ############ Need to do Y1, Y2
+                        color = 2
+                    case "Group 2":
+                        color = 10
+            case "IC32G":
+                match group:
+                    case "Group 1":
+                        color = 5
+                    case "Group 2":
+                        color = 4
+            case "CS423":
+                match group:
+                    case "Group 1":
+                        color = 1
+                    case "Group 2":
+                        color = 3
+            case "CT423":       ########## Need to update groups and colours
+                match group:
+                    case "Group 1":
+                        color = 5
+                    case "Group 2":
+                        color = 4
+        event_data[(event_id)]["color_id"] = color
+
+        ################
+        # Do dates
+        ################
+
+        print(event_data)
+        events.update(event_data)   # append to events 
+        print(events)
+
+        all_event_info_collected == False
 
 #############################################
 #  Write json to file
