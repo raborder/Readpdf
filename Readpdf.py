@@ -351,24 +351,28 @@ while i < (len(lines) - 1):        # Loop through all lines
             events.update(event_data)   # append to events 
             print(events)
         else:
-            pass
             for week_info in week_list:
                 event_data[(event_id)]["start"] = week_info[0].strftime("%m/%d/%Y")
                 event_data[(event_id)]["recurrence"] = week_info[1]
                 print(event_data)
                 events.update(event_data)   # append to events 
                 print(events)
-
+                new_event = event_data[(event_id)]
+                event_count += 1
+                event_id = "event" + str(event_count)
+                event_data[(event_id)] = new_event
+                
+                '''
                 new_data = copy.deepcopy(events[event_count])
 
                 event_count += 1            # For last iteration we don't want to increment the even_count, so have a decrement after the for statment.
                 event_id = "event" + str(event_count)
 
                 events[] = new_data
-
-                print(event_data)
+                '''
+                print("event_data: ", event_data)
                 events.update(event_data)   # append to events 
-                print(events)
+                print("events: ", events)
             event_count -= 1
 
         print(event_data)
