@@ -285,7 +285,7 @@ while i < (len(lines) - 1):        # Loop through all lines
             case "Notes:":               # event information extraction complete when get to Notes. Notes information not extracted.
                 pass
             case _:
-                print("Something screwed up in the match statement")
+                print("Something screwed up in the field matching statement")
 
 #############################################
 #  To do: Code to make json for each schedule
@@ -295,7 +295,7 @@ while i < (len(lines) - 1):        # Loop through all lines
         event_count += 1
         event_id = "event" + str(event_count)
         event_data = {(event_id):{"summary":"","location": "B10", "class_time":"", "description": "", "color_id": 0, "start": "", "recurrence": 0}}  # Create dictionary
-        event_data[(event_id)]["summary"] = course + group
+        event_data[(event_id)]["summary"] = course + " - " + group
         event_data[(event_id)]["location"] = room
         event_data[(event_id)]["class_time"] = convert_to_24hr(start_time) + " to " + convert_to_24hr(stop_time)
         event_data[(event_id)]["description"] = "" ################ To be completed - add staff?
@@ -348,15 +348,15 @@ while i < (len(lines) - 1):        # Loop through all lines
             event_data[(event_id)]["start"] = event_date
             event_data[(event_id)]["recurrence"] = 0
             print(event_data)
-            events.update(event_data)   # append to events 
+            events.update(event_data)   # add to events 
             print(events)
         else:
             for week_info in week_list:
-                event_data[(event_id)]["start"] = week_info[0].strftime("%m/%d/%Y")
+                event_data[(event_id)]["start"] = week_info[0].strftime("%d/%m/%Y")
                 event_data[(event_id)]["recurrence"] = week_info[1]
-                print(event_data)
-                events.update(event_data)   # append to events 
-                print(events)
+                print("event_data: ", event_data)
+                events.update(event_data)   # add to events 
+                print("events: ", events)
                 new_event = event_data[(event_id)]
                 event_count += 1
                 event_id = "event" + str(event_count)
@@ -370,14 +370,14 @@ while i < (len(lines) - 1):        # Loop through all lines
 
                 events[] = new_data
                 '''
-                print("event_data: ", event_data)
-                events.update(event_data)   # append to events 
-                print("events: ", events)
-            event_count -= 1
+                #print("event_data: ", event_data)
+                #events.update(event_data)   # append to events 
+                #print("events: ", events)
 
-        print(event_data)
-        events.update(event_data)   # append to events 
-        print(events)
+
+        #print(event_data)
+        #events.update(event_data)   # append to events 
+        #print(events)
 
         all_event_info_collected == False
 

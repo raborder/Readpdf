@@ -1,0 +1,272 @@
+Which cohort would you like to view?
+Enter 1 for IC32V
+2 for IC32G
+3 for CS423
+4 for CT423
+Or just enter for default file
+: Total pages: 4
+Production_2026
+Course timetable - CT423, Cert IV Cyber Security (Wks 1-52, 29/12/2025 - 21/12/2026)
+Mon, 04:30PM-07:30PM
+Wks 7-10, 12-14, 17-23, 
+25-26, 29-38, 41-44, 
+46-48, 9/02/2026 ... 
+23/11/2026
+Teaching
+Rooms: B10.138 SP Classroom - Defend (BOX/B10/N138) (BOX - Box Hill 
+Campus); B10.139 SP Classroom - Attack (BOX/B10/N139) (BOX - Box 
+Hill Campus); B10.140 CP Classroom - Control Room (BOX/B10/N140) 
+(BOX - Box Hill Campus)
+Staff: Le BUI (008548); Mundell THOMAS (010490)
+Activities: CS423_BOX_Grp 1_INF_GRP (CS423_BOX_Grp 1_INF) (2026) (0); 
+CS423_BOX_Grp 2_INF_GRP (CS423_BOX_Grp 2_INF) (2026) (0); 
+CS423_CBD_Grp 1_INF_GRP (CS423_CBD_Grp 1_INF) (2026) (0); 
+CS423_OCC_Grp 1_INF_GRP (CS423_OCC_Grp 1_INF) (2026) (0); 
+CT423_Grp 1_BOX_INF_GRP (CT423_Grp 1_BOX_INF) (2025) (0); 
+CT423_Grp 1_OCC_INF_GRP (CT423_Grp 1_OCC_INF) (2025) (0); 
+CT423_Grp 2_BOX_INF_GRP (CT423_Grp 2_BOX_INF) (2025) (0)
+Courses: CO423 (Cert IV Cyber Security) (2023); CS423; CT423 (Cert IV Cyber 
+Security) (2023); IC32G (Cert III information Technology) (2023)
+Tue, 09:00AM-12:00PM
+Wks 7-14, 17-24, 
+10/02/2026 ... 9/06/2026
+Teaching
+Availabilities: MANAGE THE SECURITY INFRASTRUCTURE FOR AN 
+ORGANISATION:CT423_CO423_CS423_FEB_BOX_INF 
+(VU23219_1_2026_BOX_S1_1) (S1)
+Rooms: B10.147 Networking Computer Classroom (BOX/B10/N147) (BOX - Box 
+Hill Campus)
+Classes: 1 (Class 1)
+Staff: Russell BORDER (010628)
+Activities: Class 1_GRP (Class 1) (2023) (0); CT423_Grp 1_BOX_INF_GRP 
+(CT423_Grp 1_BOX_INF) (2025) (0); 
+VU23219_1_2026_BOX_S1_1_1_Class (M) (VU23219_BOX_S1_1_Class
+(M)) (S1) (30)
+Courses: CT423 (Cert IV Cyber Security) (2023)
+Notes: 23/1 added class 1 and protected.  LH
+Availability Description: CertIVCyber(CT423)(CO423) (545562)
+Contact Person: Neera Basnet
+Contact Phone: 03 9286 9747
+Delivery Hours: 48
+Session Hours: 16
+Primary Teacher Name: BORDER, Russell
+Alternative Teacher: 
+Activity Type: Class (M)
+NOTES -------------
+B10.147 Tue 9AM-12PM Class 1
+Page 1, published 6/02/2026 10:41:39 AM - Box Hill Institute - CELCAT Timetabling (continued...)
+Production_2026
+Course timetable - CT423, Cert IV Cyber Security (Wks 1-52, 29/12/2025 - 21/12/2026)
+Tue, 01:00PM-04:00PM
+Wks 7-14, 10/02/2026 - 
+31/03/2026
+Teaching
+Availabilities: EVALUATE AND TEST AN INCIDENT RESPONSE PLAN FOR AN 
+ENTERPRISE:CT423_CS423_FEB_BOX_INF 
+(VU23221_1_2026_BOX_TE1_1) (TE1)
+Rooms: B10.147 Networking Computer Classroom (BOX/B10/N147) (BOX - Box 
+Hill Campus)
+Classes: 1 (Class 1)
+Staff: David BROOKS (002913)
+Activities: Class 1_GRP (Class 1) (2023) (0); CT423_Grp 1_BOX_INF_GRP 
+(CT423_Grp 1_BOX_INF) (2025) (0); 
+VU23221_1_2026_BOX_TE1_1_1_Class (M) 
+(VU23221_BOX_TE1_1_Class (M)) (TE1) (30)
+Courses: CT423 (Cert IV Cyber Security) (2023)
+Notes: 23/1 added class 1 and protected.  LH
+Availability Description: CertIVCyber(CT423) (545565)
+Contact Person: Neera Basnet
+Contact Phone: 03 9286 9747
+Delivery Hours: 24
+Session Hours: 3
+Primary Teacher Name: BROOKS, David
+Alternative Teacher: 
+Activity Type: Class (M)
+NOTES -------------
+B10.147 Tue 1-4PM Class 1
+Tue, 01:00PM-04:00PM
+Wks 17-24, 21/04/2026 - 
+9/06/2026
+Teaching
+Availabilities: ANALYSE AND PRESENT RESEARCH 
+INFORMATION:CT423_CS423_FEB_BOX_INF 
+(BSBINS401_1_2026_BOX_TE2_1) (TE2)
+Rooms: B10.147 Networking Computer Classroom (BOX/B10/N147) (BOX - Box 
+Hill Campus)
+Classes: 1 (Class 1)
+Staff: Travis MATHESON (002825)
+Activities: BSBINS401_1_2026_BOX_TE2_1_1_Class (M) 
+(BSBINS401_BOX_TE2_1_Class (M)) (TE2) (30); Class 1_GRP (Class 1) 
+(2023) (0); CT423_Grp 1_BOX_INF_GRP (CT423_Grp 1_BOX_INF) 
+(2025) (0)
+Courses: CT423 (Cert IV Cyber Security) (2023)
+Notes: 23/1 added class 1 and protected.  LH
+Availability Description: CertIVCyber(CT423) (545563)
+Contact Person: Neera Basnet
+Contact Phone: 03 9286 9747
+Delivery Hours: 24
+Session Hours: 3
+Primary Teacher Name: MATHESON, Travis
+Alternative Teacher: 
+Activity Type: Class (M)
+NOTES -------------
+B10.147 Tue 1-4PM Class 1
+Page 2, published 6/02/2026 10:41:39 AM - Box Hill Institute - CELCAT Timetabling (continued...)
+Production_2026
+Course timetable - CT423, Cert IV Cyber Security (Wks 1-52, 29/12/2025 - 21/12/2026)
+Wed, 09:00AM-12:00PM
+Wks 7-14, 11/02/2026 - 
+1/04/2026
+Teaching
+Availabilities: INVESTIGATE WINDOWS SECURITY 
+FEATURES:CT423_CO423_CS423_FEB_BOX_INF 
+(VU23225_1_2026_BOX_TE1_1) (TE1)
+Rooms: B10.147 Networking Computer Classroom (BOX/B10/N147) (BOX - Box 
+Hill Campus)
+Classes: 1 (Class 1)
+Staff: Mundell THOMAS (010490)
+Activities: Class 1_GRP (Class 1) (2023) (0); CT423_Grp 1_BOX_INF_GRP 
+(CT423_Grp 1_BOX_INF) (2025) (0); 
+VU23225_1_2026_BOX_TE1_1_1_Class (M) 
+(VU23225_BOX_TE1_1_Class (M)) (TE1) (30)
+Courses: CT423 (Cert IV Cyber Security) (2023)
+Notes: 23/1 added class 1 and protected.  LH
+Availability Description: CertIVCyber(CT423)(CO423) (545561)
+Contact Person: Neera Basnet
+Contact Phone: 03 9286 9747
+Delivery Hours: 24
+Session Hours: 8
+Primary Teacher Name: THOMAS, Mundell
+Alternative Teacher: 
+Activity Type: Class (M)
+NOTES -------------
+B10.147 Wed 9AM-12PM Class 1
+Wed, 09:00AM-12:00PM
+Wks 17-24, 22/04/2026 - 
+10/06/2026
+Teaching
+Availabilities: CONFIGURE CLOUD SERVICES:CT423_CS423_FEB_BOX_INF 
+(ICTCLD401_1_2026_BOX_TE2_1) (TE2)
+Rooms: B10.147 Networking Computer Classroom (BOX/B10/N147) (BOX - Box 
+Hill Campus)
+Classes: 1 (Class 1)
+Staff: Mundell THOMAS (010490)
+Activities: Class 1_GRP (Class 1) (2023) (0); CT423_Grp 1_BOX_INF_GRP 
+(CT423_Grp 1_BOX_INF) (2025) (0); 
+ICTCLD401_1_2026_BOX_TE2_1_1_Class (M) 
+(ICTCLD401_BOX_TE2_1_Class (M)) (TE2) (30)
+Courses: CT423 (Cert IV Cyber Security) (2023)
+Notes: 23/1 added class 1 and protected.  LH
+Availability Description: CertIVCyber(CT423) (545564)
+Contact Person: Neera Basnet
+Contact Phone: 03 9286 9747
+Delivery Hours: 24
+Session Hours: 3
+Primary Teacher Name: THOMAS, Mundell
+Alternative Teacher: 
+Activity Type: Class (M)
+NOTES -------------
+B10.147 Wed 9AM-12PM Class 1
+Page 3, published 6/02/2026 10:41:39 AM - Box Hill Institute - CELCAT Timetabling (continued...)
+Production_2026
+Course timetable - CT423, Cert IV Cyber Security (Wks 1-52, 29/12/2025 - 21/12/2026)
+Wed, 01:00PM-04:00PM
+Wks 7-14, 17-24, 
+11/02/2026 ... 
+10/06/2026
+Teaching
+Availabilities: IMPLEMENT NETWORK SECURITY INFRASTRUCTURE FOR AN 
+ORGANISATION:CT423(CO423)_FEB_BOX_INF 
+(VU23218_1_2026_BOX_S1_1) (S1)
+Rooms: B10.147 Networking Computer Classroom (BOX/B10/N147) (BOX - Box 
+Hill Campus)
+Classes: 1 (Class 1)
+Staff: David BROOKS (002913)
+Activities: Class 1_GRP (Class 1) (2023) (0); CT423_Grp 1_BOX_INF_GRP 
+(CT423_Grp 1_BOX_INF) (2025) (0); 
+VU23218_1_2026_BOX_S1_1_1_Class (M) (VU23218_BOX_S1_1_Class
+(M)) (S1) (30)
+Courses: CT423 (Cert IV Cyber Security) (2023)
+Notes: 23/1 added class 1 and protected.  LH
+Availability Description: CertIVCyber(CT423)(CO423) (545560)
+Contact Person: Neera Basnet
+Contact Phone: 03 9286 9747
+Delivery Hours: 48
+Session Hours: 3
+Primary Teacher Name: THOMAS, Mundell
+Alternative Teacher: 
+Activity Type: Class (M)
+NOTES -------------
+B10.147 Wed 1-4PM Class 1
+Thu, 12:30PM-03:30PM
+Wks 7-14, 17-24, 
+12/02/2026 ... 
+11/06/2026
+Teaching
+Availabilities: DEVELOP AND CARRY OUT A CYBER SECURITY INDUSTRY 
+PROJECT:CT423_FEB_BOX_INF (VU23220_1_2026_BOX_S1_1) (S1)
+Rooms: B10.147 Networking Computer Classroom (BOX/B10/N147) (BOX - Box 
+Hill Campus)
+Classes: 1 (Class 1)
+Staff: Chwee LIM (007054)
+Activities: Class 1_GRP (Class 1) (2023) (0); CT423_Grp 1_BOX_INF_GRP 
+(CT423_Grp 1_BOX_INF) (2025) (0); 
+VU23220_1_2026_BOX_S1_1_1_Class (M) (VU23220_BOX_S1_1_Class
+(M)) (S1) (30)
+Courses: CT423 (Cert IV Cyber Security) (2023)
+Notes: 23/1 added class 1 and protected.  LH
+Availability Description: CertIVCyber(CT423) (545566)
+Contact Person: Neera Basnet
+Contact Phone: 03 9286 9747
+Delivery Hours: 48
+Session Hours: 3
+Primary Teacher Name: LIM, Chwee
+Alternative Teacher: 
+Activity Type: Class (M)
+NOTES -------------
+B10.147 Thu 12.30-3.30PM Class 1
+Page 4, published 6/02/2026 10:41:39 AM - Box Hill Institute - CELCAT Timetabling
+
+Mon
+04:30PM
+07:30PM
+Index: 0, Value: 7-10
+Start_week:  7
+Stop_week:  10
+Recurrences:  4
+week_list:  [(datetime.date(2026, 2, 9), 4)]
+Index: 1, Value: 12-14
+Start_week:  12
+Stop_week:  14
+Recurrences:  3
+week_list:  [(datetime.date(2026, 2, 9), 4), (datetime.date(2026, 3, 16), 3)]
+Index: 2, Value: 17-23
+Start_week:  17
+Stop_week:  23
+Recurrences:  7
+week_list:  [(datetime.date(2026, 2, 9), 4), (datetime.date(2026, 3, 16), 3), (datetime.date(2026, 4, 20), 7)]
+Index: 3, Value: 25-26
+Start_week:  25
+Stop_week:  26
+Recurrences:  2
+week_list:  [(datetime.date(2026, 2, 9), 4), (datetime.date(2026, 3, 16), 3), (datetime.date(2026, 4, 20), 7), (datetime.date(2026, 6, 15), 2)]
+Index: 4, Value: 29-38
+Start_week:  29
+Stop_week:  38
+Recurrences:  10
+week_list:  [(datetime.date(2026, 2, 9), 4), (datetime.date(2026, 3, 16), 3), (datetime.date(2026, 4, 20), 7), (datetime.date(2026, 6, 15), 2), (datetime.date(2026, 7, 13), 10)]
+Index: 5, Value: 41-44
+Start_week:  41
+Stop_week:  44
+Recurrences:  4
+week_list:  [(datetime.date(2026, 2, 9), 4), (datetime.date(2026, 3, 16), 3), (datetime.date(2026, 4, 20), 7), (datetime.date(2026, 6, 15), 2), (datetime.date(2026, 7, 13), 10), (datetime.date(2026, 10, 5), 4)]
+Index: 6, Value: 46-48
+Start_week:  46
+Stop_week:  48
+Recurrences:  3
+week_list:  [(datetime.date(2026, 2, 9), 4), (datetime.date(2026, 3, 16), 3), (datetime.date(2026, 4, 20), 7), (datetime.date(2026, 6, 15), 2), (datetime.date(2026, 7, 13), 10), (datetime.date(2026, 10, 5), 4), (datetime.date(2026, 11, 9), 3)]
+['7-10', '12-14', '17-23', '25-26', '29-38', '41-44', '46-48']
+Teaching
+Loaded '__main__'
+Loaded 'runpy'
+The program 'python.exe' has exited with code 4294967295 (0xffffffff).
