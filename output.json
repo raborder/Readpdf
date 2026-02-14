@@ -1,0 +1,155 @@
+{
+    "event0": {
+        "summary": "CO423 - ",
+        "location": "B10.138",
+        "class_time": "16:30 to 19:30",
+        "description": "",
+        "color_id": 0,
+        "start": "09/11/2026",
+        "recurrence": 3
+    },
+    "event1": {
+        "summary": "CO423 - ",
+        "location": "B10.138",
+        "class_time": "16:30 to 19:30",
+        "description": "",
+        "color_id": 0,
+        "start": "09/11/2026",
+        "recurrence": 3
+    },
+    "event2": {
+        "summary": "CO423 - ",
+        "location": "B10.138",
+        "class_time": "16:30 to 19:30",
+        "description": "",
+        "color_id": 0,
+        "start": "09/11/2026",
+        "recurrence": 3
+    },
+    "event3": {
+        "summary": "CO423 - ",
+        "location": "B10.138",
+        "class_time": "16:30 to 19:30",
+        "description": "",
+        "color_id": 0,
+        "start": "09/11/2026",
+        "recurrence": 3
+    },
+    "event4": {
+        "summary": "CO423 - ",
+        "location": "B10.138",
+        "class_time": "16:30 to 19:30",
+        "description": "",
+        "color_id": 0,
+        "start": "09/11/2026",
+        "recurrence": 3
+    },
+    "event5": {
+        "summary": "CO423 - ",
+        "location": "B10.138",
+        "class_time": "16:30 to 19:30",
+        "description": "",
+        "color_id": 0,
+        "start": "09/11/2026",
+        "recurrence": 3
+    },
+    "event6": {
+        "summary": "CO423 - ",
+        "location": "B10.138",
+        "class_time": "16:30 to 19:30",
+        "description": "",
+        "color_id": 0,
+        "start": "09/11/2026",
+        "recurrence": 3
+    },
+    "event7": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "09:00 to 12:00",
+        "description": "",
+        "color_id": 0,
+        "start": "21/04/2026",
+        "recurrence": 8
+    },
+    "event8": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "09:00 to 12:00",
+        "description": "",
+        "color_id": 0,
+        "start": "21/04/2026",
+        "recurrence": 8
+    },
+    "event9": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "13:00 to 16:00",
+        "description": "",
+        "color_id": 0,
+        "start": "10/02/2026",
+        "recurrence": 8
+    },
+    "event10": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "13:00 to 16:00",
+        "description": "",
+        "color_id": 0,
+        "start": "21/04/2026",
+        "recurrence": 8
+    },
+    "event11": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "09:00 to 12:00",
+        "description": "",
+        "color_id": 0,
+        "start": "11/02/2026",
+        "recurrence": 8
+    },
+    "event12": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "09:00 to 12:00",
+        "description": "",
+        "color_id": 0,
+        "start": "22/04/2026",
+        "recurrence": 8
+    },
+    "event13": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "13:00 to 16:00",
+        "description": "",
+        "color_id": 0,
+        "start": "22/04/2026",
+        "recurrence": 8
+    },
+    "event14": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "13:00 to 16:00",
+        "description": "",
+        "color_id": 0,
+        "start": "22/04/2026",
+        "recurrence": 8
+    },
+    "event15": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "12:30 to 15:30",
+        "description": "",
+        "color_id": 0,
+        "start": "23/04/2026",
+        "recurrence": 8
+    },
+    "event16": {
+        "summary": "CT423 - Class 1",
+        "location": "B10.147",
+        "class_time": "12:30 to 15:30",
+        "description": "",
+        "color_id": 0,
+        "start": "23/04/2026",
+        "recurrence": 8
+    }
+}

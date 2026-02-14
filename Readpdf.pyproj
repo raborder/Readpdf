@@ -45,12 +45,11 @@
     </Interpreter>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CELCAT Timetable_CS423.pdf" />
-    <Content Include="CELCAT Timetable_CT423.pdf" />
     <Content Include="CELCAT_Timetable_CS423.pdf" />
     <Content Include="CELCAT_Timetable_CT423.pdf" />
     <Content Include="CELCAT_Timetable_IC32G.pdf" />
     <Content Include="CELCAT_Timetable_IC32V.pdf" />
+    <Content Include="output.json" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.12" />

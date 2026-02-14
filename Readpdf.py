@@ -14,7 +14,7 @@ import re
 from datetime import date, timedelta, datetime
 import os.path
 import json
-import copy
+import pprint
 
 """
 Class colours
@@ -43,7 +43,7 @@ def week_to_date(current_year, week_num):
     return date_object.date()
 '''
 
-def week_to_isodate(current_year, week_num, week_day):
+def week_to_isodate(current_year, week_num, week_day):                  # Takes 3 integer arguments
     date_object = date.fromisocalendar(current_year, week_num, week_day)
     return date_object
 
@@ -349,37 +349,31 @@ while i < (len(lines) - 1):        # Loop through all lines
             event_data[(event_id)]["recurrence"] = 0
             print(event_data)
             events.update(event_data)   # add to events 
-            print(events)
+            pprint.pprint(events, indent=4)
         else:
-            for week_info in week_list:
-                event_data[(event_id)]["start"] = week_info[0].strftime("%d/%m/%Y")
-                event_data[(event_id)]["recurrence"] = week_info[1]
+            for j in range(len(week_list)):
+            #for week_info in week_list:  Don't know why this doesn't work! Keeps looping!
+            #    event_data[(event_id)]["start"] = week_info[0].strftime("%d/%m/%Y")
+            #    event_data[(event_id)]["recurrence"] = week_info[1]
+                event_data[(event_id)]["start"] = week_list[j][0].strftime("%d/%m/%Y")
+                event_data[(event_id)]["recurrence"] = week_list[j][1]
                 print("event_data: ", event_data)
                 events.update(event_data)   # add to events 
-                print("events: ", events)
+                pprint.pprint(events, indent=4)
                 new_event = event_data[(event_id)]
                 event_count += 1
                 event_id = "event" + str(event_count)
                 event_data[(event_id)] = new_event
+                del event_data["event" + str(event_count - 1)]
+
+            event_count -= 1
                 
-                '''
-                new_data = copy.deepcopy(events[event_count])
-
-                event_count += 1            # For last iteration we don't want to increment the even_count, so have a decrement after the for statment.
-                event_id = "event" + str(event_count)
-
-                events[] = new_data
-                '''
                 #print("event_data: ", event_data)
                 #events.update(event_data)   # append to events 
                 #print("events: ", events)
 
-
-        #print(event_data)
-        #events.update(event_data)   # append to events 
-        #print(events)
-
-        all_event_info_collected == False
+    all_event_info_collected = False
+    
 
 #############################################
 #  Write json to file
