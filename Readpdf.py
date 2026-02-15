@@ -9,12 +9,13 @@ Imports
 from ast import Try
 from logging import fatal
 from os import times
+from sched import Event
 from pypdf import PdfReader
 import re
 from datetime import date, timedelta, datetime
 import os.path
 import json
-import pprint
+import copy
 
 """
 Class colours
@@ -102,6 +103,9 @@ event_list = [] # List of event objects
 event_count = -1
 events = {}
 
+availabilities = ""
+activities = ""
+
 group = ""  #   Needed when Classes not in event
 
 all_event_info_collected = False
@@ -159,6 +163,8 @@ event_pattern = r'Mon|Tue|Wed|Thu|Fri|Sat|Sun|Availabilities:|Rooms:|Classes:|St
 # i = len(lines)
 i = 1
 
+week_list = []
+
 while i < (len(lines) - 1):        # Loop through all lines
     i += 1
     line = lines[i]
@@ -192,7 +198,7 @@ while i < (len(lines) - 1):        # Loop through all lines
                         line = line + lines[i] 
                     week_pattern = r'\d{1,2}-\d{1,2}'
                     matches = re.findall(week_pattern, line) # Output: ['1-2', '12-3', '1-34', '12-34']
-                    week_list = []
+                    week_list.clear()
                     for index, week_range in enumerate(matches):
                         print(f"Index: {index}, Value: {week_range}")
                         index = week_range.find('-')
@@ -231,11 +237,12 @@ while i < (len(lines) - 1):        # Loop through all lines
                         parameter_found = True
                 unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'   # search for unit using regex
                 regex = re.compile(unit_pattern)   # look for unit
-                availabilities = regex.search(parameter)
-                if availabilities == None:
+                if regex.search(parameter) == None:
+                    availabilities = None
                     print("Availabilities: ", "None")
                 else:
-                    print("Availabilities: ", availabilities.group())
+                    availabilities = regex.search(parameter).group()
+                    print("Availabilities: ", availabilities)
                 i -= 1          # Decrement as had to go extra line to find end of Availabilities
             case "Rooms:":
                 room = line[7:14].strip()
@@ -272,11 +279,12 @@ while i < (len(lines) - 1):        # Loop through all lines
                         parameter_found = True
                 unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'   # search for unit using regex
                 regex = re.compile(unit_pattern)   # look for unit
-                activities = regex.search(parameter)
-                if activities == None:
+                if regex.search(parameter) == None:
+                    activities = None
                     print("Activities: ", "None")
                 else:
-                    print("Activities: ", activities.group())
+                    activities = regex.search(parameter).group()
+                    print("Activities: ", activities)
                 i -= 1          # Decrement as had to go extra line to find end of Activities
             case "Courses:":
                 course = line[9:14]
@@ -295,10 +303,16 @@ while i < (len(lines) - 1):        # Loop through all lines
         event_count += 1
         event_id = "event" + str(event_count)
         event_data = {(event_id):{"summary":"","location": "B10", "class_time":"", "description": "", "color_id": 0, "start": "", "recurrence": 0}}  # Create dictionary
-        event_data[(event_id)]["summary"] = course + " - " + group
+        if group != "":
+            event_data[(event_id)]["summary"] = course + " - " + group + ", " + availabilities # Could have used availabilities or activities but they seem to be always together and list the same unit.
+        else:
+            event_data[(event_id)]["summary"] = course
         event_data[(event_id)]["location"] = room
         event_data[(event_id)]["class_time"] = convert_to_24hr(start_time) + " to " + convert_to_24hr(stop_time)
-        event_data[(event_id)]["description"] = "" ################ To be completed - add staff?
+        if (availabilities == None) and (activities == None):
+            event_data[(event_id)]["description"] = event_type
+        else:
+            event_data[(event_id)]["description"] = availabilities
         """
         Class colours
 
@@ -317,27 +331,27 @@ while i < (len(lines) - 1):        # Loop through all lines
         match course:
             case "IC32V":
                 match group:
-                    case "Group 1": ############ Need to do Y1, Y2
+                    case "Class 1": ############ Need to do Y1, Y2
                         color = 2
-                    case "Group 2":
+                    case "Class 2":
                         color = 10
             case "IC32G":
                 match group:
-                    case "Group 1":
+                    case "Class 1":
                         color = 5
-                    case "Group 2":
+                    case "Class 2":
                         color = 4
             case "CS423":
                 match group:
-                    case "Group 1":
+                    case "Class 1":
                         color = 1
-                    case "Group 2":
+                    case "Class 2":
                         color = 3
             case "CT423":       ########## Need to update groups and colours
                 match group:
-                    case "Group 1":
+                    case "Class 1":
                         color = 5
-                    case "Group 2":
+                    case "Class 2":
                         color = 4
         event_data[(event_id)]["color_id"] = color
 
@@ -349,7 +363,8 @@ while i < (len(lines) - 1):        # Loop through all lines
             event_data[(event_id)]["recurrence"] = 0
             print(event_data)
             events.update(event_data)   # add to events 
-            pprint.pprint(events, indent=4)
+            # pprint.pprint(events, indent=4)
+            print(json.dumps(events, indent=4))
         else:
             for j in range(len(week_list)):
             #for week_info in week_list:  Don't know why this doesn't work! Keeps looping!
@@ -359,10 +374,11 @@ while i < (len(lines) - 1):        # Loop through all lines
                 event_data[(event_id)]["recurrence"] = week_list[j][1]
                 print("event_data: ", event_data)
                 events.update(event_data)   # add to events 
-                pprint.pprint(events, indent=4)
-                new_event = event_data[(event_id)]
+                #pprint.pprint(events, indent=4) Don't know why this doesn't work - stopped at 9 events
+                print(json.dumps(events, indent=4))
+                new_event = copy.deepcopy(event_data[(event_id)])   # Reaslly iomportant to do a DEEP copy or all referred varaibles are updated.
                 event_count += 1
-                event_id = "event" + str(event_count)
+                event_id = "event" + str(event_count)               # Shallow copy, but ok here.
                 event_data[(event_id)] = new_event
                 del event_data["event" + str(event_count - 1)]
 
@@ -372,6 +388,17 @@ while i < (len(lines) - 1):        # Loop through all lines
                 #events.update(event_data)   # append to events 
                 #print("events: ", events)
 
+        # Clear event information
+        event_type = ""
+        start_time = ""
+        stop_time = ""
+        availabilities = None
+        room = ""
+        teacher = ""
+        activities = None
+        course = ""
+        group = ""
+        
     all_event_info_collected = False
     
 
@@ -393,62 +420,6 @@ with open(complete_path, 'w') as file:
     json.dump(events, file, indent=4) # Using indent makes the file human-readable
 
 
-
-    '''
-    if 'Rooms' in line:             # Unit not listed
-        pass
-    else:                           # Event must start with Availabilities
-        availabilities = line
-        while not ('Rooms' in line):
-            i += 1 
-            line = lines[i]
-            availabilitiies = availabilities + line
-            print(availabilities)
-        room = "B10." + line[11:13].strip()
-    '''
     #except Exception as e:
     #    print(f"something screwed up: {e}")
         
-
-
-
-
-"""
-for line in lines:
-    regex = re.compile(pattern, re.MULTILINE)
-    match = regex.match(line)
-    print(match)
-    day = match
-    if match != None:
-        start_time = line[5:12]
-        print(start_time)
-        stop_time = line[13:]
-        print(stop_time)
-    line = 
-"""
-
-'''
- if match != None:
-        day = match.group()             # To extract the matched string, you use the .group() method
-        print(match)
-        match day:
-            case 'Mon':
-                day_of_week = 1
-            case 'Tue':
-                day_of_week = 2
-            case 'Wed':
-                day_of_week = 3
-            case 'Thu':
-                day_of_week = 4
-            case 'Fri':
-                day_of_week = 5
-            case 'Sat':
-                day_of_week = 6
-            case _:
-                day_of_week = 7
-        
-
-   
-    gathering_info = True
-    while gathering_info:
-'''
