@@ -1,60 +1,60 @@
 {
     "event0": {
-        "summary": "CO423 - ",
+        "summary": "CO423",
         "location": "B10.138",
         "class_time": "16:30 to 19:30",
         "description": "",
         "color_id": 0,
-        "start": "09/11/2026",
-        "recurrence": 3
+        "start": "09/02/2026",
+        "recurrence": 4
     },
     "event1": {
-        "summary": "CO423 - ",
+        "summary": "CO423",
         "location": "B10.138",
         "class_time": "16:30 to 19:30",
         "description": "",
         "color_id": 0,
-        "start": "09/11/2026",
+        "start": "16/03/2026",
         "recurrence": 3
     },
     "event2": {
-        "summary": "CO423 - ",
+        "summary": "CO423",
         "location": "B10.138",
         "class_time": "16:30 to 19:30",
         "description": "",
         "color_id": 0,
-        "start": "09/11/2026",
-        "recurrence": 3
+        "start": "20/04/2026",
+        "recurrence": 7
     },
     "event3": {
-        "summary": "CO423 - ",
+        "summary": "CO423",
         "location": "B10.138",
         "class_time": "16:30 to 19:30",
         "description": "",
         "color_id": 0,
-        "start": "09/11/2026",
-        "recurrence": 3
+        "start": "15/06/2026",
+        "recurrence": 2
     },
     "event4": {
-        "summary": "CO423 - ",
+        "summary": "CO423",
         "location": "B10.138",
         "class_time": "16:30 to 19:30",
         "description": "",
         "color_id": 0,
-        "start": "09/11/2026",
-        "recurrence": 3
+        "start": "13/07/2026",
+        "recurrence": 10
     },
     "event5": {
-        "summary": "CO423 - ",
+        "summary": "CO423",
         "location": "B10.138",
         "class_time": "16:30 to 19:30",
         "description": "",
         "color_id": 0,
-        "start": "09/11/2026",
-        "recurrence": 3
+        "start": "05/10/2026",
+        "recurrence": 4
     },
     "event6": {
-        "summary": "CO423 - ",
+        "summary": "CO423",
         "location": "B10.138",
         "class_time": "16:30 to 19:30",
         "description": "",
@@ -63,92 +63,92 @@
         "recurrence": 3
     },
     "event7": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, VU23219",
         "location": "B10.147",
         "class_time": "09:00 to 12:00",
-        "description": "",
-        "color_id": 0,
-        "start": "21/04/2026",
+        "description": "VU23219",
+        "color_id": 5,
+        "start": "10/02/2026",
         "recurrence": 8
     },
     "event8": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, VU23219",
         "location": "B10.147",
         "class_time": "09:00 to 12:00",
-        "description": "",
-        "color_id": 0,
+        "description": "VU23219",
+        "color_id": 5,
         "start": "21/04/2026",
         "recurrence": 8
     },
     "event9": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, VU23221",
         "location": "B10.147",
         "class_time": "13:00 to 16:00",
-        "description": "",
-        "color_id": 0,
+        "description": "VU23221",
+        "color_id": 5,
         "start": "10/02/2026",
         "recurrence": 8
     },
     "event10": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, BSBINS401",
         "location": "B10.147",
         "class_time": "13:00 to 16:00",
-        "description": "",
-        "color_id": 0,
+        "description": "BSBINS401",
+        "color_id": 5,
         "start": "21/04/2026",
         "recurrence": 8
     },
     "event11": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, VU23225",
         "location": "B10.147",
         "class_time": "09:00 to 12:00",
-        "description": "",
-        "color_id": 0,
+        "description": "VU23225",
+        "color_id": 5,
         "start": "11/02/2026",
         "recurrence": 8
     },
     "event12": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, ICTCLD401",
         "location": "B10.147",
         "class_time": "09:00 to 12:00",
-        "description": "",
-        "color_id": 0,
+        "description": "ICTCLD401",
+        "color_id": 5,
         "start": "22/04/2026",
         "recurrence": 8
     },
     "event13": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, VU23218",
         "location": "B10.147",
         "class_time": "13:00 to 16:00",
-        "description": "",
-        "color_id": 0,
-        "start": "22/04/2026",
+        "description": "VU23218",
+        "color_id": 5,
+        "start": "11/02/2026",
         "recurrence": 8
     },
     "event14": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, VU23218",
         "location": "B10.147",
         "class_time": "13:00 to 16:00",
-        "description": "",
-        "color_id": 0,
+        "description": "VU23218",
+        "color_id": 5,
         "start": "22/04/2026",
         "recurrence": 8
     },
     "event15": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, VU23220",
         "location": "B10.147",
         "class_time": "12:30 to 15:30",
-        "description": "",
-        "color_id": 0,
-        "start": "23/04/2026",
+        "description": "VU23220",
+        "color_id": 5,
+        "start": "12/02/2026",
         "recurrence": 8
     },
     "event16": {
-        "summary": "CT423 - Class 1",
+        "summary": "CT423 - Class 1, VU23220",
         "location": "B10.147",
         "class_time": "12:30 to 15:30",
-        "description": "",
-        "color_id": 0,
+        "description": "VU23220",
+        "color_id": 5,
         "start": "23/04/2026",
         "recurrence": 8
     }

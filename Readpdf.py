@@ -10,6 +10,7 @@ from ast import Try
 from logging import fatal
 from os import times
 from sched import Event
+from sys import activate_stack_trampoline
 from pypdf import PdfReader
 import re
 from datetime import date, timedelta, datetime
@@ -164,6 +165,7 @@ event_pattern = r'Mon|Tue|Wed|Thu|Fri|Sat|Sun|Availabilities:|Rooms:|Classes:|St
 i = 1
 
 week_list = []
+notes = False
 
 while i < (len(lines) - 1):        # Loop through all lines
     i += 1
@@ -184,16 +186,17 @@ while i < (len(lines) - 1):        # Loop through all lines
                 i += 1
                 line = lines[i]     # checking for case where day of week was on last line and therefore can't increment.  This may need to change as develop code
                 if not "Wks" in line:           # Single week event
-                    week_num = int(line[3:4].strip())
-                    event_date = week_to_isodate(current_year, week_num, day_of_week[matched_line.group()])
-                    print(event_date.strftime("%d/%m/%Y"))
-                    i += 1
-                    line = lines[i]
-                    event_type = line       # next line must be event type (Orientation or Teaching)
-                    recurring_event = False
+                    if notes == False:
+                        week_num = int(line[3:4].strip())
+                        event_date = week_to_isodate(current_year, week_num, day_of_week[matched_line.group()])
+                        print(event_date.strftime("%d/%m/%Y"))
+                        i += 1
+                        line = lines[i]
+                        event_type = line       # next line must be event type (Orientation or Teaching)
+                        recurring_event = False
                 else:                       # Must be multiple week event (wks)
                     # get all lines up to event type so they can be analysed
-                    while not (("Teaching" in line) or ("Orientation" in line)):
+                    while not (("Teaching" in line) or ("Orientation" in line) or ("Online" in line)):
                         i += 1
                         line = line + lines[i] 
                     week_pattern = r'\d{1,2}-\d{1,2}'
@@ -235,7 +238,7 @@ while i < (len(lines) - 1):        # Loop through all lines
                     match = regex.search(parameter)
                     if match != None:       # must have moved to next parameter
                         parameter_found = True
-                unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'   # search for unit using regex
+                unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}|Y\d{1}'   # search for unit using regex
                 regex = re.compile(unit_pattern)   # look for unit
                 if regex.search(parameter) == None:
                     availabilities = None
@@ -277,7 +280,7 @@ while i < (len(lines) - 1):        # Loop through all lines
                     match = regex.search(parameter)
                     if match != None:       # must have moved to next parameter
                         parameter_found = True
-                unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}'   # search for unit using regex
+                unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}|Y\d{1}'   # search for unit using regex
                 regex = re.compile(unit_pattern)   # look for unit
                 if regex.search(parameter) == None:
                     activities = None
@@ -291,7 +294,7 @@ while i < (len(lines) - 1):        # Loop through all lines
                 print("Course: ",course)
                 all_event_info_collected = True
             case "Notes:":               # event information extraction complete when get to Notes. Notes information not extracted.
-                pass
+                notes = True
             case _:
                 print("Something screwed up in the field matching statement")
 
@@ -306,7 +309,10 @@ while i < (len(lines) - 1):        # Loop through all lines
         if group != "":
             event_data[(event_id)]["summary"] = course + " - " + group + ", " + availabilities # Could have used availabilities or activities but they seem to be always together and list the same unit.
         else:
-            event_data[(event_id)]["summary"] = course
+            if course == "IC32V" and (activities != None):
+                event_data[(event_id)]["summary"] = course + " - " + activities
+            else:
+                event_data[(event_id)]["summary"] = course
         event_data[(event_id)]["location"] = room
         event_data[(event_id)]["class_time"] = convert_to_24hr(start_time) + " to " + convert_to_24hr(stop_time)
         if (availabilities == None) and (activities == None):
@@ -359,7 +365,7 @@ while i < (len(lines) - 1):        # Loop through all lines
         # Do dates
         ################
         if recurring_event == False:
-            event_data[(event_id)]["start"] = event_date
+            event_data[(event_id)]["start"] = event_date.strftime("%d/%m/%Y")
             event_data[(event_id)]["recurrence"] = 0
             print(event_data)
             events.update(event_data)   # add to events 
@@ -398,6 +404,7 @@ while i < (len(lines) - 1):        # Loop through all lines
         activities = None
         course = ""
         group = ""
+        notes = False
         
     all_event_info_collected = False
     
