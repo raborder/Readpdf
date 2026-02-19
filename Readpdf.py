@@ -175,6 +175,21 @@ while i < (len(lines) - 1):        # Loop through all lines
     if not matched_line == None:
         match (matched_line.group()):
             case "Mon"|"Tue"|"Wed"|"Thu"|"Fri"|"Sat"|"Sun":
+                
+                '''
+                Sometimes day of week is recorded in Notes.  In these cases it is always for Online classes, so search for Online, Teaching, or Orientation as event type and discard if Online.  It will be found in the next 3 or four lines.  If so, can ignore.
+                We don't want to display online classes.
+                If not found, then day of week must have been listed in notes and we can also ignore.
+                '''
+                online_found = True
+                text = line
+                for j in range(i+1, i+4):
+                    text = text + lines[j]
+                    if "Online" in text:
+                        online_found = True
+                if online_found == True:
+                    break
+
                 print(matched_line.group())
                 start_time = line[5:12]
                 print(start_time)
@@ -220,6 +235,8 @@ while i < (len(lines) - 1):        # Loop through all lines
                         event_type = "Teaching"
                     elif "Orientation" in line:
                         event_type = "Orientation"
+                    elif "Online" in line:
+                        event_type = "Online"
                     else:
                         print("Something screwed up")
                     recurring_event = True
@@ -365,7 +382,8 @@ while i < (len(lines) - 1):        # Loop through all lines
         # Do dates
         ################
         if recurring_event == False:
-            event_data[(event_id)]["start"] = event_date.strftime("%d/%m/%Y")
+            #event_data[(event_id)]["start"] = event_date.strftime("%d/%m/%Y")
+            event_data[(event_id)]["start"] = event_date.strftime("%Y-%m-%d")
             event_data[(event_id)]["recurrence"] = 0
             print(event_data)
             events.update(event_data)   # add to events 
@@ -376,7 +394,8 @@ while i < (len(lines) - 1):        # Loop through all lines
             #for week_info in week_list:  Don't know why this doesn't work! Keeps looping!
             #    event_data[(event_id)]["start"] = week_info[0].strftime("%d/%m/%Y")
             #    event_data[(event_id)]["recurrence"] = week_info[1]
-                event_data[(event_id)]["start"] = week_list[j][0].strftime("%d/%m/%Y")
+                #event_data[(event_id)]["start"] = week_list[j][0].strftime("%d/%m/%Y")
+                event_data[(event_id)]["start"] = week_list[j][0].strftime("%Y-%m-%d")
                 event_data[(event_id)]["recurrence"] = week_list[j][1]
                 print("event_data: ", event_data)
                 events.update(event_data)   # add to events 
