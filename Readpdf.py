@@ -181,7 +181,7 @@ while i < (len(lines) - 1):        # Loop through all lines
                 We don't want to display online classes.
                 If not found, then day of week must have been listed in notes and we can also ignore.
                 '''
-                online_found = True
+                online_found = False
                 text = line
                 for j in range(i+1, i+4):
                     text = text + lines[j]
