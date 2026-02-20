@@ -214,8 +214,11 @@ while i < (len(lines) - 1):        # Loop through all lines
                     while not (("Teaching" in line) or ("Orientation" in line) or ("Online" in line)):
                         i += 1
                         line = line + lines[i] 
-                    week_pattern = r'\d{1,2}-\d{1,2}'
+                    # week_pattern = r'\d{1,2}-\d{1,2}' # This looks for dash pairs only
+                    #week_pattern = r'(\b\d{1,2}[,\s]|\s\d{1,2}-\d{1,2}[,\s])'
+                    week_pattern = r'(\b\d{1,2}\b\d{1,2}-\d{1,2}\b)'
                     matches = re.findall(week_pattern, line) # Output: ['1-2', '12-3', '1-34', '12-34']
+                    print(matches)
                     week_list.clear()
                     for index, week_range in enumerate(matches):
                         print(f"Index: {index}, Value: {week_range}")
