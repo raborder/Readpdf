@@ -165,7 +165,6 @@ event_pattern = r'Mon|Tue|Wed|Thu|Fri|Sat|Sun|Availabilities:|Rooms:|Classes:|St
 i = 1
 
 week_list = []
-notes = False
 
 while i < (len(lines) - 1):        # Loop through all lines
     i += 1
@@ -177,76 +176,79 @@ while i < (len(lines) - 1):        # Loop through all lines
             case "Mon"|"Tue"|"Wed"|"Thu"|"Fri"|"Sat"|"Sun":
                 
                 '''
-                Sometimes day of week is recorded in Notes.  In these cases it is always for Online classes, so search for Online, Teaching, or Orientation as event type and discard if Online.  It will be found in the next 3 or four lines.  If so, can ignore.
-                We don't want to display online classes.
+                Sometimes day of week is recorded in Notes.  In these cases we don't want to extract day information. To be valid, the day will always be followed by 'Wk' on the next line.  If no next line then end of file.
                 If not found, then day of week must have been listed in notes and we can also ignore.
                 '''
-                online_found = False
-                text = line
-                for j in range(i+1, i+4):
-                    text = text + lines[j]
-                    if "Online" in text:
-                        online_found = True
-                if online_found == True:
-                    break
 
-                print(matched_line.group())
-                start_time = line[5:12]
-                print(start_time)
-                stop_time = line[13:]
-                print(stop_time.strip())
-                #######################################
-                # Scheduling information
-                #######################################
-                i += 1
-                line = lines[i]     # checking for case where day of week was on last line and therefore can't increment.  This may need to change as develop code
-                if not "Wks" in line:           # Single week event
-                    if notes == False:
-                        week_num = int(line[3:4].strip())
-                        event_date = week_to_isodate(current_year, week_num, day_of_week[matched_line.group()])
-                        print(event_date.strftime("%d/%m/%Y"))
+                try:
+                    if "Wk" in lines[i+1]:               # 'Wk' found, so can continue
+                        print(matched_line.group())
+                        start_time = line[5:12]
+                        print(start_time)
+                        stop_time = line[13:]
+                        print(stop_time.strip())
+                        #######################################
+                        # Scheduling information
+                        #######################################
                         i += 1
-                        line = lines[i]
-                        event_type = line       # next line must be event type (Orientation or Teaching)
-                        recurring_event = False
-                else:                       # Must be multiple week event (wks)
-                    # get all lines up to event type so they can be analysed
-                    while not (("Teaching" in line) or ("Orientation" in line) or ("Online" in line)):
-                        i += 1
-                        line = line + lines[i] 
-                    # week_pattern = r'\d{1,2}-\d{1,2}' # This looks for dash pairs only
-                    #week_pattern = r'(\b\d{1,2}[,\s]|\s\d{1,2}-\d{1,2}[,\s])'
-                    week_pattern = r'(\b\d{1,2}\b\d{1,2}-\d{1,2}\b)'
-                    matches = re.findall(week_pattern, line) # Output: ['1-2', '12-3', '1-34', '12-34']
-                    print(matches)
-                    week_list.clear()
-                    for index, week_range in enumerate(matches):
-                        print(f"Index: {index}, Value: {week_range}")
-                        index = week_range.find('-')
-                        start_week = week_range[:index]
-                        stop_week = week_range[index+1:]
-                        print("Start_week: ",start_week)
-                        print("Stop_week: ",stop_week)
-                        event_date = week_to_isodate(current_year, int(start_week), day_of_week[matched_line.group()])
-                        num_of_weeks = int(stop_week) - int(start_week) + 1
-                        print("Recurrences: ",num_of_weeks)
-                        # week_list.append((start_week,num_of_weeks))     # Store info
-                        week_list.append((event_date,num_of_weeks))     # Store info
-                        print("week_list: ", week_list)
-                    print(matches)
-                    if "Teaching" in line:
-                        event_type = "Teaching"
-                    elif "Orientation" in line:
-                        event_type = "Orientation"
-                    elif "Online" in line:
-                        event_type = "Online"
-                    else:
-                        print("Something screwed up")
-                    recurring_event = True
-                print(event_type)
-                #######################################
-                # Event information
-                #######################################
+                        line = lines[i]     # checking for case where day of week was on last line and therefore can't increment.  This may need to change as develop code
+                        if not "Wks" in line:           # Single week event - this is redundant since 'Wks' has been unpdated to handle single weeks
+                            week_num = int(line[3:5].strip().strip(','))
+                            event_date = week_to_isodate(current_year, week_num, day_of_week[matched_line.group()])
+                            print(event_date.strftime("%d/%m/%Y"))
+                            i += 1
+                            line = lines[i]
+                            event_type = line       # next line must be event type (Orientation or Teaching)
+                            recurring_event = False
+                        else:                       # Must be multiple week event (wks)
+                            # get all lines up to event type so they can be analysed
+                            while not (("Teaching" in line) or ("Orientation" in line) or ("Online" in line)):
+                                i += 1
+                                line = line + lines[i] 
+                            # week_pattern = r'\d{1,2}-\d{1,2}' # This looks for dash pairs only
+                            week_pattern = r'\s\d{1,2},|\s\d{1,2}-\d{1,2},'  
+                            matches = re.findall(week_pattern, line) # Output: ['1-2', '12-3', '1-34', '12-34']
+                            print(matches)
+                            week_list.clear()
+                            for index, week_range in enumerate(matches):
+                                print(f"Index: {index}, Value: {week_range}")
+                                if '-' in week_range:
+                                    index = week_range.find('-')
+                                    start_week = week_range[:index].strip()         # Pattern match captures space at start and comma at end, so these need to be stripped out (maybe better regex could fix this). Note th
+                                    stop_week = week_range[index+1:].strip(",")
+                                    print("Start_week: ",start_week)
+                                    print("Stop_week: ",stop_week)
+                                    event_date = week_to_isodate(current_year, int(start_week), day_of_week[matched_line.group()])
+                                    num_of_weeks = int(stop_week) - int(start_week) + 1
+                                    print("Recurrences: ",num_of_weeks)
+                                    # week_list.append((start_week,num_of_weeks))     # Store info
+                                    week_list.append((event_date,num_of_weeks))     # Store info
+                                    print("week_list: ", week_list)
+                                else:
+                                    start_week = week_range.strip().strip(',')
+                                    event_date = week_to_isodate(current_year, int(start_week), day_of_week[matched_line.group()])
+                                    num_of_weeks = 0
+                                    print("Week:",start_week)
+                                    print("Recurrences: ", num_of_weeks)
+                                    week_list.append((event_date,num_of_weeks))     # Store info
+                                    print("week_list: ", week_list)
+                            print(matches)
+                            if "Teaching" in line:
+                                event_type = "Teaching"
+                            elif "Orientation" in line:
+                                event_type = "Orientation"
+                            elif "Online" in line:
+                                event_type = "Online"
+                            else:
+                                print("Something screwed up")
+                            recurring_event = True
+                        print(event_type)
+                        #######################################
+                        # Event information
+                        #######################################
+                except:
+                    pass                # No more lines so continue loop which should now exit
+
             case "Availabilities:":
                 parameter_found = False     # Loop around until next parameter, building up Availabilities string. Line with 'Availabilities' cannot be next parameter
                 parameter = line
@@ -268,7 +270,14 @@ while i < (len(lines) - 1):        # Loop through all lines
                     print("Availabilities: ", availabilities)
                 i -= 1          # Decrement as had to go extra line to find end of Availabilities
             case "Rooms:":
-                room = line[7:14].strip()
+                # room = line[7:14].strip()
+                room_pattern = r'B10\.\w{3,4}\s'
+                regex = re.compile(room_pattern)   # look for room
+                match = regex.search(line)
+                if not match is None:
+                    room = regex.search(line).group().strip()       # strip because terminating whitespace is part of pattern
+                else:
+                    room = "TBA"
                 print("Room: ",room)
                 parameter_found = False     # Loop around until next parameter, building up Rooms string.
                 parameter = line
@@ -314,7 +323,7 @@ while i < (len(lines) - 1):        # Loop through all lines
                 print("Course: ",course)
                 all_event_info_collected = True
             case "Notes:":               # event information extraction complete when get to Notes. Notes information not extracted.
-                notes = True
+                pass
             case _:
                 print("Something screwed up in the field matching statement")
 
@@ -426,7 +435,6 @@ while i < (len(lines) - 1):        # Loop through all lines
         activities = None
         course = ""
         group = ""
-        notes = False
         
     all_event_info_collected = False
     
