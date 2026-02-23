@@ -375,18 +375,22 @@ while i < (len(lines) - 1):        # Loop through all lines
                         color = 5
                     case "Class 2":
                         color = 4
+                    case "Class 3":
+                        color = 4
             case "CS423":
                 match group:
                     case "Class 1":
                         color = 1
                     case "Class 2":
-                        color = 3
+                        color = 6
             case "CT423":       ########## Need to update groups and colours
                 match group:
                     case "Class 1":
-                        color = 5
+                        color = 2
                     case "Class 2":
-                        color = 4
+                        color = 3
+            case "CO423":
+                    color = 9
         event_data[(event_id)]["color_id"] = color
 
         ################
