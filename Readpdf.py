@@ -260,7 +260,7 @@ while i < (len(lines) - 1):        # Loop through all lines
                     match = regex.search(parameter)
                     if match != None:       # must have moved to next parameter
                         parameter_found = True
-                unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}|Y\d{1}'   # search for unit using regex
+                unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}|Y\d{1}'   # search for unit using regex (looks for unit or VDSS class)
                 regex = re.compile(unit_pattern)   # look for unit
                 if regex.search(parameter) == None:
                     availabilities = None
@@ -309,7 +309,7 @@ while i < (len(lines) - 1):        # Loop through all lines
                     match = regex.search(parameter)
                     if match != None:       # must have moved to next parameter
                         parameter_found = True
-                unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}|Y\d{1}'   # search for unit using regex
+                unit_pattern = r'VU\d{5}|BSB[A-Z]{3}\d{3}|ICT[A-Z]{3}\d{3}|Y\d{1}'   # search for unit using regex (looks for unit or VDSS class)
                 regex = re.compile(unit_pattern)   # look for unit
                 if regex.search(parameter) == None:
                     activities = None
@@ -351,10 +351,9 @@ while i < (len(lines) - 1):        # Loop through all lines
         """
         Class colours
 
-        IC32V   Yr1 Group 1 2 (Sage)
-                Yr1 Group 2 10 (Basil)
+        IC32V   Yr1 Group 1 2 Sage
+                Yr1 Group 2 10 Basil    Celcat not giving enough information to differentiate Y1 and Y1
 	            Yr2 Group 1	7 Lavender
-	            Yr2 Group 2	9 Blueberry
         IC32G	Group 1     5 Banana
 	            Group 2 & 3	4 Flamingo
 	            Group 4     6 Tangerine
@@ -365,10 +364,10 @@ while i < (len(lines) - 1):        # Loop through all lines
         color = 0   # Default
         match course:
             case "IC32V":
-                match group:
-                    case "Class 1": ############ Need to do Y1, Y2
+                match activities:
+                    case "Y1": ############ Need to do Y1, Y2
                         color = 2
-                    case "Class 2":
+                    case "Y2":
                         color = 10
             case "IC32G":
                 match group:
