@@ -124,16 +124,16 @@ selection = input("Which cohort would you like to view?\nEnter 1 for IC32V\n2 fo
 match (selection):
     case "1":
         # Create a PdfReader object by providing the path to your PDF file
-        reader = PdfReader('CELCAT_Timetable_IC32V.pdf')
+        reader = PdfReader('CELCAT_Timetable_IC32V_Term_1.pdf')
     case "2":
         # Create a PdfReader object by providing the path to your PDF file
-        reader = PdfReader('CELCAT_Timetable_IC32G.pdf')
+        reader = PdfReader('CELCAT_Timetable_IC32G_Term_1.pdf')
     case "3":
         # Create a PdfReader object by providing the path to your PDF file
-        reader = PdfReader('CELCAT_Timetable_CS423.pdf')
+        reader = PdfReader('CELCAT_Timetable_CS423_Term_1.pdf')
     case "4":
         # Create a PdfReader object by providing the path to your PDF file
-        reader = PdfReader('CELCAT_Timetable_CT423.pdf')
+        reader = PdfReader('CELCAT_Timetable_CT423_Term_1.pdf')
     case _:
         # Create a PdfReader object by providing the path to your PDF file
         reader = PdfReader('CELCAT_Timetable.pdf')
@@ -365,7 +365,7 @@ while i < (len(lines) - 1):        # Loop through all lines
         match course:
             case "IC32V":
                 match activities:
-                    case "Y1": ############ Need to do Y1, Y2
+                    case "Y1": ############ Need to try to differentiate between classes in each year
                         color = 2
                     case "Y2":
                         color = 10
@@ -374,9 +374,9 @@ while i < (len(lines) - 1):        # Loop through all lines
                     case "Class 1":
                         color = 5
                     case "Class 2":
-                        color = 4
+                        color = 3
                     case "Class 3":
-                        color = 4
+                        color = 3
             case "CS423":
                 match group:
                     case "Class 1":
@@ -386,9 +386,9 @@ while i < (len(lines) - 1):        # Loop through all lines
             case "CT423":       ########## Need to update groups and colours
                 match group:
                     case "Class 1":
-                        color = 2
+                        color = 9
                     case "Class 2":
-                        color = 3
+                        color = 11
             case "CO423":
                     color = 9
         event_data[(event_id)]["color_id"] = color
